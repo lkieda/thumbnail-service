@@ -28,3 +28,6 @@
 
 # Ignore IDE files
 .idea
+
+# Ignore misc files
+.DS_Store

@@ -9,12 +9,14 @@ class ThumbnailController < ApplicationController
     height = permitted_params[:height].to_i
 
     image = MiniMagick::Image.open(url)
-    resized_image = ::ImageResizer.new.resize(image, width, height)
+    resized_image = ::ImageResizer.new.resize(image.path, width, height)
 
     send_file resized_image.path, type: resized_image.mime_type, disposition: "inline"
-  rescue MiniMagick::Invalid => _e
+  rescue MiniMagick::Invalid => e
+    Rails.logger.error [e.message, *e.backtrace].join($/)
     render :json => { errors: ["Invalid image"] }, :status => :bad_request
-  rescue StandardError => _e
+  rescue StandardError => e
+    Rails.logger.error [e.message, *e.backtrace].join($/)
     render :json => { errors: ["Internal server error"] }, :status => :internal_server_error
   end
 

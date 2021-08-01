@@ -1,18 +1,20 @@
 class ImageResizer
   def resize(image, width, height)
-    resize_arg = if width > image.width && height > image.height
-                   "#{image.width}x#{image.height}"
+    image_copy = MiniMagick::Image.open(image)
+
+    resize_arg = if width > image_copy.width && height > image_copy.height
+                   "#{image_copy.width}x#{image_copy.height}"
                  else
                    "#{width}x#{height}"
                  end
 
-    image.combine_options do |b|
+    image_copy.combine_options do |b|
       b.resize(resize_arg)
       b.background("black")
       b.gravity("center")
       b.extent("#{width}x#{height}")
     end
 
-    image
+    image_copy
   end
 end
