@@ -3,6 +3,7 @@ FROM ruby:2.7.4-alpine
 #RUN apt-get update && \
 #    apt-get install -y --no-install-recommends \
 RUN apk add --no-cache --update \
+        imagemagick \
         postgresql-client postgresql-dev \
         tzdata \
         dumb-init \

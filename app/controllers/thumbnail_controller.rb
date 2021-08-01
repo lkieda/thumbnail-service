@@ -1,5 +1,7 @@
 class ThumbnailController < ApplicationController
   def resize
-    render json: "OK"
+    image = MiniMagick::Image.open(params[:url])
+
+    send_file image.path, type: image.mime_type, disposition: "inline"
   end
 end
