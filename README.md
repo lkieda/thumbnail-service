@@ -1,24 +1,38 @@
-# README
+# Thumbnail Service
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This service takes URL of an image and displays its resized version. Request structure:
 
-Things you may want to cover:
+```
+GET /thumbnail?url=<url>&width=<width>&height=<height>
+```
 
-* Ruby version
+For example we can take this picture: https://placekitten.com/200/300
 
-* System dependencies
+And get its resized version: https://limitless-earth-78752.herokuapp.com/thumbnail?url=https://placekitten.com/200/300&width=150&height=400
 
-* Configuration
+## Running locally
 
-* Database creation
+The project uses Docker. To run it build the image:
 
-* Database initialization
+```
+docker-compose build
+docker-compose run app rails db:create
+```
 
-* How to run the test suite
+To run the service:
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+docker-compose up app
+```
 
-* Deployment instructions
+Now, you should be able to hit the endpoint on localhost: http://localhost:3000/thumbnail?url=https://placekitten.com/200/300&width=150&height=400
 
-* ...
+Running tests:
+
+```
+docker-compose run app rspec
+```
+
+## Deployment
+
+The service runs on Heroku, using following steps: https://devcenter.heroku.com/articles/getting-started-with-ruby
